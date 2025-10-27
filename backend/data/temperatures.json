@@ -1,0 +1,6 @@
+[
+  { "room_id": "COLD-01", "temperature": -10.5 },
+  { "room_id": "COLD-02", "temperature": -9 },
+  { "room_id": "COLD-03", "temperature": -20 },
+  { "room_id": "COLD-04", "temperature": -16.5 }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "sku": "ICE-001",
+    "name": "Ice Cream",
+    "batch": "B-202510",
+    "expiry": "2025-12-01",
+    "qty": 50,
+    "location": "RACK-A1"
+  },
+  {
+    "sku": "MEAT-002",
+    "name": "Beef Slice",
+    "batch": "B-202509",
+    "expiry": "2025-11-02",
+    "qty": 20,
+    "location": "RACK-B2"
+  }
+]
