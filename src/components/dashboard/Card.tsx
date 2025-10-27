@@ -10,6 +10,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { type Temperature } from "../../types/dashboard.types";
+import { isTemperatureNormal } from "../../services/isTemperatureNormal";
 
 const CardDashboard = (data: Temperature) => {
   return (
@@ -26,7 +27,7 @@ const CardDashboard = (data: Temperature) => {
           <Text>Suhu terkini: {data.temperature}°C</Text>
           <Flex gap={2}>
             <Text>Status suhu: </Text>
-            {data.temperature >= -20 && data.temperature <= -16 ? (
+            {isTemperatureNormal(data.temperature) ? (
               <Flex align="center" mb={2}>
                 <Box
                   w="12px"
