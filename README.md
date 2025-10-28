@@ -2,6 +2,16 @@
 
 A simple warehouse management system built with React, TypeScript, and Vite, featuring real-time temperature monitoring, inventory management, and inbound processing capabilities.
 
+## Screenshots
+
+### Dashboard
+
+![Dashboard](./docs/images/dashboard.png)
+
+### Inventory Management
+
+![Inventory](./docs/images/inventory.png)
+
 ## Getting Started
 
 ### Prerequisites
@@ -156,16 +166,4 @@ Create a `.env` file in the root directory:
 
 ```env
 VITE_API_URL=http://localhost:8080
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
-```
-
 ```
