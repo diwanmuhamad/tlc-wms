@@ -13,6 +13,10 @@ import { DatePickerField } from "./DatePicker";
 import { SelectLocation } from "./Select";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
+import { useGetInventoryQuery } from "../../services/apiSlice";
+import type { InventoryItem } from "../../types/inventory.types";
+import { useEffect, useState } from "react";
+import { formatDateToYYYYMMDD } from "../../services/formatDate";
 
 const InboundForm = () => {
   const {
@@ -23,12 +27,36 @@ const InboundForm = () => {
     reset,
   } = useForm<FormData>();
 
+  const { data: inventory } = useGetInventoryQuery();
+  const [inventoryLocal, setInventoryLocal] = useState<InventoryItem[]>([]);
   const navigate = useNavigate();
   const toast = useToast();
 
+  useEffect(() => {
+    if (inventory) setInventoryLocal(inventory); // initialize local state
+  }, [inventory]);
+
   const onSubmit = (data: FormData) => {
     try {
-      localStorage.setItem("inbound-data", JSON.stringify(data));
+      const inventoryLocalStorage = localStorage.getItem("inbound-data");
+      let inventoryArray: InventoryItem[] = [];
+      if (inventoryLocalStorage) {
+        const parsedData: InventoryItem[] = JSON.parse(inventoryLocalStorage);
+        inventoryArray = parsedData;
+      }
+      const newestInventory: InventoryItem[] =
+        inventoryArray.length > 0 ? [...inventoryArray] : [...inventoryLocal];
+      console.log(newestInventory);
+      newestInventory.push({
+        sku: data.sku,
+        name: data.name,
+        batch: data.batch,
+        expiry: formatDateToYYYYMMDD(new Date(data.expiry)),
+        qty: data.qty,
+        location: data.location,
+      });
+
+      localStorage.setItem("inbound-data", JSON.stringify(newestInventory));
       toast({
         title: "Success",
         description: "Inbound data saved successfully.",
@@ -42,6 +70,7 @@ const InboundForm = () => {
       // Redirect to /inventory
       navigate("/inventory");
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error",
         description: "Failed to save inbound data.",

@@ -10,9 +10,19 @@ export default function Inventory() {
   const [filteredInventory, setFilteredInventory] = useState<InventoryItem[]>(
     []
   );
+  const [inventoryLocal, setInventoryLocal] = useState<InventoryItem[]>([]);
+  const inventoryLocalStorage = localStorage.getItem("inbound-data");
 
   useEffect(() => {
-    if (inventory) setFilteredInventory(inventory); // initialize local state
+    if (inventoryLocalStorage) {
+      const parsedData: InventoryItem[] = JSON.parse(inventoryLocalStorage);
+      setFilteredInventory(parsedData);
+      setInventoryLocal(parsedData);
+    } else if (inventory) {
+      setFilteredInventory(inventory);
+      localStorage.setItem("inbound-data", JSON.stringify(inventory));
+      setInventoryLocal(inventory);
+    }
   }, [inventory]);
 
   if (isLoading)
@@ -35,7 +45,7 @@ export default function Inventory() {
         Inventory List
       </Heading>
       <SearchInput
-        inventory={inventory ?? []}
+        inventory={inventoryLocal ?? []}
         setFilteredInventory={setFilteredInventory}
       />
       <TableInventory items={filteredInventory} />

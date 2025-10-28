@@ -1,73 +1,171 @@
-# React + TypeScript + Vite
+# TLC Warehouse Management System (WMS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple warehouse management system built with React, TypeScript, and Vite, featuring real-time temperature monitoring, inventory management, and inbound processing capabilities.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Prerequisites
 
-## React Compiler
+- Node.js (v18 or higher)
+- Go (v1.19 or higher)
+- npm or yarn
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend Setup
 
-## Expanding the ESLint configuration
+1. Install dependencies:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+   ```bash
+   npm install
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. Start development server:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   ```bash
+   npm run dev
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Run tests:
+   ```bash
+   npm test
+   ```
+
+### Backend Setup
+
+1. Navigate to backend directory:
+
+   ```bash
+   cd backend
+   ```
+
+2. Install Go dependencies:
+
+   ```bash
+   go mod download
+   ```
+
+3. Run the server:
+   ```bash
+   go run main.go
+   ```
+
+The application will be available at `http://localhost:5173` with the backend running on `http://localhost:8080`.
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm test` - Run tests
+
+## Tech Stack
+
+### Frontend
+
+- React 19 with TypeScript
+- Vite 7 for build tooling
+- Chakra UI for component library
+- Redux Toolkit for state management
+- React Router for navigation
+- React Hook Form for form handling
+- Vitest for testing
+
+### Backend
+
+- Go (Golang)
+- Standard HTTP server
+- CORS support
+- JSON file-based storage
+
+## Project Structure
+
+```
+tlc-wms/
+├── backend/                 # Go backend server
+│   ├── data/               # JSON data storage
+│   └── main.go             # Server implementation
+├── src/
+│   ├── components/         # React components
+│   │   ├── dashboard/      # Dashboard components
+│   │   ├── inbound/        # Inbound processing components
+│   │   └── inventory/      # Inventory management components
+│   ├── services/           # API and utility services
+│   ├── types/             # TypeScript type definitions
+│   ├── constant/          # Constants and static data
+│   └── hooks/             # Custom React hooks
+├── public/                # Static assets
+└── vite.config.ts        # Vite configuration
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Architecture Design Decisions
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Frontend Architecture**
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   - Component-based architecture using React for reusability and maintainability
+   - Chakra UI for consistent design system and accessibility
+   - Redux Toolkit for centralized state management
+   - RTK Query for data fetching and caching
+
+2. **Backend Architecture**
+
+   - Simple Go HTTP server for reliability and performance
+   - File-based storage for easy deployment and testing
+   - CORS enabled for local development
+   - Fallback mechanism in frontend for offline capability
+
+3. **State Management**
+
+   - Redux for global state
+   - Local storage for offline data persistence
+   - React Hook Form for form state management
+
+4. **Type Safety**
+   - TypeScript for type checking
+   - Shared type definitions between components
+   - Strict type checking enabled
+
+## Development Workflow
+
+1. Frontend development server runs on port 5173
+2. Backend API server runs on port 8080
+3. Frontend has fallback to local JSON data if backend is unavailable
+4. ESLint and TypeScript provide development-time error checking
+5. Tests can be run in watch mode during development
+
+## Production Build
+
+```bash
+npm run build
+```
+
+This will create an optimized build in the `dist` directory.
+
+## Testing
+
+The project uses Vitest for testing with React Testing Library. Tests are located alongside the components they test.
+
+To run tests:
+
+```bash
+npm test
+```
+
+## Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_API_URL=http://localhost:8080
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+```
+
 ```
